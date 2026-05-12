@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "title": "Aura Flow",
+    "category": "3D Motion",
+    "year": "2024",
+    "description": "An immersive 3D experience exploring the fluidity of light and sound.",
+    "story": "Aura Flow was born from a desire to visualize the invisible rhythmic energy that surrounds us. We spent months developing a custom fluid simulation engine that reacts to frequency data, creating a seamless loop of light and motion that feels both digital and organic.",
+    "isArchive": false,
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Zen Digital",
+    "category": "Web Design",
+    "year": "2024",
+    "description": "Minimalist portfolio for a contemporary architecture firm.",
+    "story": "The challenge for Zen Digital was to create a digital space that embodied the 'Ma' (negative space) philosophy of the architecture firm. Every interaction is designed to be intentional, slow, and purposeful, reducing the noise of the modern web to highlight the raw beauty of structural design.",
+    "isArchive": false,
+    "image": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Echoes of Silence",
+    "category": "Exhibition",
+    "year": "2023",
+    "description": "A visual study on urban isolation and silence.",
+    "story": "Echoes of Silence is a multidisciplinary exhibition that debuted in Singapore. It explores the paradoxical silence found within dense urban environments. Through a series of long-exposure photographs and generative soundscapes, we invited visitors to find their own center within the chaotic city grid.",
+    "isArchive": true,
+    "image": "https://images.unsplash.com/photo-1518005020250-6e5949ad09be?q=80&w=800&auto=format&fit=crop",
+    "gallery": [
+      "https://images.unsplash.com/photo-1518005020250-6e5949ad09be?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop"
+    ]
+  }
+]

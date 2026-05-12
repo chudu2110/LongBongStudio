@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "category": "Origins",
+    "title": "Between Two Worlds",
+    "content": "Lông Bông Studio began as a bridge between the vibrant heritage of Poland and the futuristic clarity of Singapore. Our journey started in a small workshop where we debated the intersection of organic form and digital precision.",
+    "image": "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "2",
+    "category": "Philosophy",
+    "title": "The Art of Wandering",
+    "content": "'Lông Bông' translates to wandering or drifting with no fixed destination. In our creative process, this means allowing ideas to evolve naturally, following curiosity rather than conventions.",
+    "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop"
+  },
+  {
+    "id": "3",
+    "category": "Evolution",
+    "title": "Digital Tactility",
+    "content": "As we moved into 3D motion and immersive web, our mission remained: to make the digital feel tangible. We treat pixels like clay, sculpting environments that invite touch even across a screen.",
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop"
+  }
+]

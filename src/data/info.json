@@ -1,0 +1,62 @@
+{
+  "studioName": "Lông Bông Studio",
+  "philosophy": "We believe in the intersection of digital precision and organic flow.",
+  "team": [
+    {
+      "name": "Alex River",
+      "role": "Creative Director",
+      "bio": "Focused on immersive experiences and narrative-driven digital art. Alex leads the studio with a vision that blends traditional cinematography with cutting-edge interaction design.",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+      "quote": "Design is not just what it looks like, but how it makes you feel in the silence between frames.",
+      "specialties": ["Concept Art", "Creative Direction", "Interactive Narratives"],
+      "projects": [
+        {
+          "title": "Neon Dreams",
+          "image": "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
+          "gallery": [
+            "https://images.unsplash.com/photo-1550684847-75bdda21cc95?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1510519133417-c81d379c9411?q=80&w=800&auto=format&fit=crop"
+          ]
+        },
+        {
+          "title": "Digital Flora",
+          "image": "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=800&auto=format&fit=crop",
+          "gallery": [
+            "https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1454165833222-d1dca7e8ca8a?q=80&w=800&auto=format&fit=crop"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sam Stone",
+      "role": "3D Artist",
+      "bio": "Specialist in lighting and texture, Sam brings digital environments to life. With a background in architecture, Sam focuses on the structural reality of virtual spaces.",
+      "image": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=800&auto=format&fit=crop",
+      "quote": "The magic of 3D is finding the soul within the polygon.",
+      "specialties": ["High-Fidelity Rendering", "Procedural Texturing", "Lighting Synthesis"],
+      "projects": [
+        {
+          "title": "Crystal Caverns",
+          "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
+          "gallery": [
+            "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800&auto=format&fit=crop"
+          ]
+        },
+        {
+          "title": "Urban Flow",
+          "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=800&auto=format&fit=crop",
+          "gallery": [
+            "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=800&auto=format&fit=crop"
+          ]
+        }
+      ]
+    }
+  ]
+}
