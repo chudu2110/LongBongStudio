@@ -1,14 +1,10 @@
-import React from 'react';
 import { motion } from 'motion/react';
+import { AnimatedText } from '../../components/AnimatedText';
 
 export default function Contact({ onNavigate }: { onNavigate: (tab: string) => void }) {
   return (
     <motion.main 
       key="contact"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
       className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-6 py-20 text-center select-none"
     >
       <div className="max-w-3xl space-y-12">
@@ -26,11 +22,11 @@ export default function Contact({ onNavigate }: { onNavigate: (tab: string) => v
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <button className="w-full sm:w-auto px-10 py-3 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full text-[11px] font-medium hover:bg-white hover:text-stone-900 transition-all shadow-xl uppercase tracking-widest">
-            Schedule a coffee
+          <button className="group w-full sm:w-auto px-10 py-3 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full text-[11px] font-medium hover:bg-white hover:text-stone-900 transition-all shadow-xl uppercase tracking-widest">
+            <AnimatedText text="Schedule a coffee" />
           </button>
-          <button className="w-full sm:w-auto px-10 py-3 bg-white text-stone-900 rounded-full text-[11px] font-medium hover:scale-105 transition-transform shadow-xl uppercase tracking-widest">
-            Contact us
+          <button className="group w-full sm:w-auto px-10 py-3 bg-white text-stone-900 rounded-full text-[11px] font-medium hover:scale-105 transition-transform shadow-xl uppercase tracking-widest">
+            <AnimatedText text="Contact us" />
           </button>
         </motion.div>
       </div>

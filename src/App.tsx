@@ -11,7 +11,7 @@ import {
   Volume2, 
   VolumeX
 } from 'lucide-react';
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 
 // Page Imports
 import Home from './pages/Home';
@@ -19,81 +19,78 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import LoadingScreen from './pages/LoadingScreen';
+import { AnimatedText } from './components/AnimatedText';
 
-const AnimatedText = ({ text }: { text: string }) => {
-  return (
-    <div className="relative flex overflow-hidden">
-      {/* Top layer */}
-      <div className="flex">
-        {text.split('').map((char, i) => (
-          <span
-            key={`top-${i}`}
-            className="inline-block group-hover:-translate-y-[120%] transition-transform duration-[400ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
-            style={{ transitionDelay: `${i * 20}ms` }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </div>
-      {/* Bottom layer */}
-      <div className="absolute inset-0 flex" aria-hidden="true">
-        {text.split('').map((char, i) => (
-          <span
-            key={`bottom-${i}`}
-            className="inline-block translate-y-[120%] group-hover:translate-y-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
-            style={{ transitionDelay: `${i * 20}ms` }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
+const TABS = ['Home', 'About', 'Projects', 'Contact'];
+const VIDEO_SOURCES: Record<string, string> = {
+  'Home': "/videos/Home Screen.mp4",
+  'About': "/videos/About us Screen.mp4",
+  'Projects': "/videos/Project Screen.mp4",
+  'Contact': "/videos/Contact Screen.mp4"
 };
 
 export default function App() {
   const [isMuted, setIsMuted] = useState(true);
   const [activeTab, setActiveTab] = useState('Home');
+  const [direction, setDirection] = useState(0);
+
+  const handleTabChange = (newTab: string) => {
+    if (newTab === activeTab) return;
+    const currentIdx = TABS.indexOf(activeTab);
+    const newIdx = TABS.indexOf(newTab);
+    setDirection(newIdx > currentIdx ? 1 : -1);
+    setActiveTab(newTab);
+  };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isNightMode, setIsNightMode] = useState(false);
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+
+  const toggleTimeMode = () => {
+    const newMode = !isNightMode;
+    const projectVideo = videoRefs.current['Projects'];
+    if (projectVideo) {
+      if (newMode) {
+        projectVideo.currentTime = 38;
+      } else {
+        projectVideo.currentTime = 0;
+      }
+    }
+    setIsNightMode(newMode);
+  };
+
+  useEffect(() => {
+    if (activeTab !== 'Projects') {
+      setIsNightMode(false);
+    }
+  }, [activeTab]);
+
+  const handleVideoLoad = (e: React.SyntheticEvent<HTMLVideoElement>, tab: string) => {
+    if (tab === 'Projects' && isNightMode) {
+      e.currentTarget.currentTime = 38;
+    }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   // Content for each tab
-  const renderContent = () => {
-    switch (activeTab) {
+  const renderTabContent = (tab: string) => {
+    switch (tab) {
       case 'Home':
-        return <Home onNavigate={setActiveTab} />;
+        return <Home onNavigate={handleTabChange} />;
       case 'About':
-        return <About onNavigate={setActiveTab} />;
+        return <About onNavigate={handleTabChange} />;
       case 'Projects':
-        return <Projects onNavigate={setActiveTab} />;
+        return <Projects onNavigate={handleTabChange} />;
       case 'Contact':
-        return <Contact onNavigate={setActiveTab} />;
+        return <Contact onNavigate={handleTabChange} />;
       default:
-        return <Home onNavigate={setActiveTab} />;
+        return null;
     }
   };
 
-  // Dynamic background based on active tab
-  const bgImage = useMemo(() => {
-    switch (activeTab) {
-      case 'Home':
-        return "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2560&auto=format&fit=crop";
-      case 'About':
-        return "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2560&auto=format&fit=crop";
-      case 'Projects':
-        return "https://images.unsplash.com/photo-1518005020250-6e5949ad09be?q=80&w=2560&auto=format&fit=crop";
-      case 'Contact':
-        return "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2560&auto=format&fit=crop";
-      default:
-        return "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2560&auto=format&fit=crop";
-    }
-  }, [activeTab]);
-
-  // Animation variants
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -171,40 +168,58 @@ export default function App() {
   };
 
   return (
-    <AnimatePresence>
-      {isLoading ? (
-        <motion.div
-          key="loading"
-          initial={{ y: 0 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[100]"
-        >
-          <LoadingScreen onWelcome={() => setIsLoading(false)} />
-        </motion.div>
-      ) : (
-        <motion.div 
-          key="main-app"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative min-h-screen w-full bg-stone-900 overflow-hidden font-sans text-white"
-        >
-          {/* Background Image Container */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={bgImage}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-                src={bgImage} 
-                alt="Background" 
-                className="h-full w-full object-cover brightness-[0.7] saturate-[0.8]"
-              />
-            </AnimatePresence>
-            <div className="absolute inset-0 bg-stone-950/20 backdrop-blur-[2px]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/40 via-transparent to-stone-950/60" />
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            key="loading"
+            initial={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[100]"
+          >
+            <LoadingScreen onWelcome={() => setIsLoading(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      <motion.div 
+        key="main-app"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        className="relative min-h-screen w-full bg-stone-900 overflow-hidden font-sans text-white"
+      >
+          {/* Background Video Container */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            {TABS.map((tab, idx) => {
+              const activeIdx = TABS.indexOf(activeTab);
+              const offset = idx - activeIdx;
+              
+              return (
+                <motion.video
+                  key={tab}
+                  ref={(el) => { if (el) videoRefs.current[tab] = el; }}
+                  src={VIDEO_SOURCES[tab]}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  onLoadedMetadata={(e) => handleVideoLoad(e, tab)}
+                  initial={direction === 0 ? { opacity: 0, scale: 1.1, x: `${offset * 100}%` } : false}
+                  animate={{
+                    x: `${offset * 100}%`,
+                    opacity: 1,
+                    scale: (isLoading && direction === 0) ? 1.1 : 1
+                  }}
+                  transition={{ 
+                    duration: 1.4, 
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              );
+            })}
           </div>
 
           {/* Header */}
@@ -213,7 +228,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="text-lg font-editorial tracking-tight text-white/95 cursor-pointer select-none"
-              onClick={() => setActiveTab('Home')}
+              onClick={() => handleTabChange('Home')}
             >
               Lông Bông Studio
             </motion.div>
@@ -250,10 +265,30 @@ export default function App() {
           </nav>
 
           {/* Main Content Sections */}
-          <div className="relative min-h-[calc(100vh-180px)] overflow-y-auto overflow-x-hidden md:scrollbar-hide">
-            <AnimatePresence mode="wait">
-              {renderContent()}
-            </AnimatePresence>
+          <div className="relative min-h-[calc(100vh-180px)] overflow-x-hidden md:scrollbar-hide">
+            {TABS.map((tab, idx) => {
+              const activeIdx = TABS.indexOf(activeTab);
+              const offset = idx - activeIdx;
+              
+              return (
+                <motion.div
+                  key={tab}
+                  initial={direction === 0 ? { opacity: 0, x: `${offset * 100}%` } : false}
+                  animate={{
+                    x: `${offset * 100}%`,
+                    opacity: 1
+                  }}
+                  transition={{ 
+                    duration: 1.4, 
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden md:scrollbar-hide"
+                  style={{ pointerEvents: offset === 0 ? 'auto' : 'none' }}
+                >
+                  {renderTabContent(tab)}
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Bottom Floating Navigation */}
@@ -276,7 +311,7 @@ export default function App() {
                         custom={idx}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => setActiveTab(tab)}
+                        onClick={() => handleTabChange(tab)}
                         className={`group px-5 py-2 shrink-0 rounded-full text-[10px] font-medium shadow-lg whitespace-nowrap bg-white transition-colors relative z-10 overflow-hidden ${
                           activeTab === tab 
                           ? 'text-stone-900' 
@@ -337,7 +372,7 @@ export default function App() {
                         custom={idx}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => setActiveTab(tab)}
+                        onClick={() => handleTabChange(tab)}
                         className={`group px-5 py-2 shrink-0 rounded-full text-[10px] font-medium shadow-lg whitespace-nowrap bg-white transition-colors relative z-10 overflow-hidden ${
                           activeTab === tab 
                           ? 'text-stone-900' 
@@ -353,38 +388,53 @@ export default function App() {
             </div>
           </div>
 
-          {/* Audio Toggle */}
-          <motion.button 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            onClick={() => setIsMuted(!isMuted)}
-            className="fixed bottom-10 right-10 z-20 w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl flex items-center justify-center hover:bg-white hover:text-stone-900 transition-all active:scale-95 group"
-          >
-            <AnimatePresence mode="wait">
-              {isMuted ? (
-                <motion.div
-                  key="mute"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
+          {/* Audio & Time Controls */}
+          <div className="fixed bottom-10 right-10 z-20 flex items-center gap-3">
+            <AnimatePresence>
+              {activeTab === 'Projects' && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={toggleTimeMode}
+                  className="px-5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-lg flex items-center justify-center hover:bg-white hover:text-stone-900 transition-all active:scale-95 text-[10px] font-medium whitespace-nowrap"
                 >
-                  <VolumeX className="w-4 h-4 stroke-[2.5]" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="volume"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
-                >
-                  <Volume2 className="w-4 h-4 stroke-[2.5]" />
-                </motion.div>
+                  {isNightMode ? "Good morning" : "Good night"}
+                </motion.button>
               )}
             </AnimatePresence>
-          </motion.button>
+            
+            <motion.button 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              onClick={() => setIsMuted(!isMuted)}
+              className="w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl flex items-center justify-center hover:bg-white hover:text-stone-900 transition-all active:scale-95 group"
+            >
+              <AnimatePresence mode="wait">
+                {isMuted ? (
+                  <motion.div
+                    key="mute"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                  >
+                    <VolumeX className="w-4 h-4 stroke-[2.5]" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="volume"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                  >
+                    <Volume2 className="w-4 h-4 stroke-[2.5]" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
         </motion.div>
-      )}
-    </AnimatePresence>
+    </>
   );
 }

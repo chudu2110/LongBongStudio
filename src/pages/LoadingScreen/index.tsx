@@ -33,15 +33,15 @@ export default function LoadingScreen({ onWelcome }: LoadingScreenProps) {
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden font-sans">
-      
+
       {/* Main Content wrapper with blur effect */}
-      <motion.div 
+      <motion.div
         className="relative z-10 flex flex-col items-center justify-center w-full h-full"
         style={{ filter: `blur(${blurValue}px)` }}
       >
         {/* Content Container */}
         <div className="relative flex flex-col items-center">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
@@ -57,7 +57,7 @@ export default function LoadingScreen({ onWelcome }: LoadingScreenProps) {
                   key="welcome-button"
                   initial={{ opacity: 0, scale: 0.95, y: 5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     stiffness: 100,
                     damping: 15,

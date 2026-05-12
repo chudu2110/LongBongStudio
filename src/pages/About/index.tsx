@@ -9,10 +9,6 @@ export default function About({ onNavigate }: { onNavigate: (tab: string) => voi
   return (
     <motion.main 
       key="about"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
       className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-6 py-20 text-center select-none"
     >
       <AnimatePresence mode="wait">
