@@ -21,14 +21,14 @@ export default function About({ onNavigate }: { onNavigate: (tab: string) => voi
             className="max-w-4xl space-y-12"
           >
             <h1 className="text-xl md:text-2xl lg:text-3xl font-normal leading-snug tracking-tight text-white/90">
-              A <span className="font-editorial italic">Polish-Singaporean creative studio</span> shaping brands through strategy, design and motion. We create designs that connect across mediums and dimensions.
+              <span className="font-editorial italic">Lông Bông</span> is an independent art studio in Vietnam hosting free weekly activities, workshops and collaborative experiences rooted in community and curiosity.
             </h1>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 pt-8 text-[9px] uppercase tracking-[0.25em] text-white/30 font-medium">
-              <div className="hover:text-white transition-colors cursor-default">Visual strategy</div>
-              <div className="hover:text-white transition-colors cursor-default">Web development</div>
-              <div className="hover:text-white transition-colors cursor-default">Branding</div>
-              <div className="hover:text-white transition-colors cursor-default">3D Animation</div>
+              <div className="hover:text-white transition-colors cursor-default">Art workshops</div>
+              <div className="hover:text-white transition-colors cursor-default">Community gatherings</div>
+              <div className="hover:text-white transition-colors cursor-default">Creative collaborations</div>
+              <div className="hover:text-white transition-colors cursor-default">Open studio events</div>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-4 pt-8">

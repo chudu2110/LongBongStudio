@@ -50,8 +50,8 @@ export default function Projects({ onNavigate }: { onNavigate: (tab: string) => 
               animate={{ opacity: 1, y: 0 }}
               className="text-2xl md:text-4xl lg:text-5xl font-normal leading-tight text-white/95"
             >
-              See selection of <span className="font-editorial italic text-white">our recent work</span><br/>
-              across branding, web and motion.
+              A <span className="font-editorial italic text-white">growing archive</span> of workshops,<br/>
+              pop-ups, exhibitions and creative encounters.
             </motion.h1>
             
             <motion.div 

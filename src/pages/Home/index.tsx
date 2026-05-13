@@ -13,9 +13,9 @@ export default function Home({ onNavigate }: { onNavigate: (tab: string) => void
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-2xl text-xl md:text-3xl lg:text-4xl font-normal leading-[1.2] tracking-tight text-white/95"
       >
-        A <span className="font-editorial italic font-light">creative design studio</span> for<br/>
-        branding, immersive web<br/>
-        and 3D motion.
+        Art, people, <span className="font-editorial italic font-light">conversations</span> and<br/>
+        a little bit of<br/>
+        beautiful chaos.
       </motion.h1>
       
       {/* Buttons removed as requested */}

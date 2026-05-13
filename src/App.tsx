@@ -29,6 +29,13 @@ const VIDEO_SOURCES: Record<string, string> = {
   'Contact': "/videos/Contact Screen.mp4"
 };
 
+const AUDIO_SOURCES: Record<string, string> = {
+  'Home': "/sounds/HomePage.mp3",
+  'About': "/sounds/AboutPage.aac",
+  'Projects': "/sounds/ProjectPage.mp3",
+  'Contact': "/sounds/ContactPage.aac"
+};
+
 export default function App() {
   const [isMuted, setIsMuted] = useState(true);
   const [activeTab, setActiveTab] = useState('Home');
@@ -45,6 +52,37 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isNightMode, setIsNightMode] = useState(false);
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (!isMuted) {
+        audioRef.current.play().catch(e => console.log("Audio play prevented:", e));
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [activeTab, isMuted]);
+
+  useEffect(() => {
+    const activeVideo = videoRefs.current[activeTab];
+    if (activeVideo) {
+      activeVideo.play().catch(e => console.log("Video play prevented:", e));
+    }
+
+    const timeout = setTimeout(() => {
+      TABS.forEach(tab => {
+        if (tab !== activeTab) {
+          const video = videoRefs.current[tab];
+          if (video && !video.paused) {
+            video.pause();
+          }
+        }
+      });
+    }, 1400);
+
+    return () => clearTimeout(timeout);
+  }, [activeTab]);
 
   const toggleTimeMode = () => {
     const newMode = !isNightMode;
@@ -178,7 +216,10 @@ export default function App() {
             transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-[100]"
           >
-            <LoadingScreen onWelcome={() => setIsLoading(false)} />
+            <LoadingScreen onWelcome={() => {
+              setIsLoading(false);
+              setIsMuted(false);
+            }} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -201,9 +242,8 @@ export default function App() {
                   key={tab}
                   ref={(el) => { if (el) videoRefs.current[tab] = el; }}
                   src={VIDEO_SOURCES[tab]}
-                  autoPlay
                   loop
-                  muted={isMuted}
+                  muted={true}
                   playsInline
                   onLoadedMetadata={(e) => handleVideoLoad(e, tab)}
                   initial={direction === 0 ? { opacity: 0, scale: 1.1, x: `${offset * 100}%` } : false}
@@ -221,6 +261,15 @@ export default function App() {
               );
             })}
           </div>
+
+          {/* Background Audio */}
+          <audio
+            ref={audioRef}
+            src={AUDIO_SOURCES[activeTab]}
+            loop
+            muted={isMuted}
+            className="hidden"
+          />
 
           {/* Header */}
           <nav className="relative z-10 flex items-center justify-between px-6 py-4 md:px-10">
@@ -265,7 +314,7 @@ export default function App() {
           </nav>
 
           {/* Main Content Sections */}
-          <div className="relative min-h-[calc(100vh-180px)] overflow-x-hidden md:scrollbar-hide">
+          <div className="relative min-h-[calc(100vh-180px)] overflow-x-hidden scrollbar-hide">
             {TABS.map((tab, idx) => {
               const activeIdx = TABS.indexOf(activeTab);
               const offset = idx - activeIdx;
@@ -282,7 +331,7 @@ export default function App() {
                     duration: 1.4, 
                     ease: [0.22, 1, 0.36, 1]
                   }}
-                  className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden md:scrollbar-hide"
+                  className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-hide"
                   style={{ pointerEvents: offset === 0 ? 'auto' : 'none' }}
                 >
                   {renderTabContent(tab)}

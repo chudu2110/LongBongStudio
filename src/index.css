@@ -11,3 +11,13 @@
     @apply bg-stone-900 text-white antialiased selection:bg-white selection:text-stone-900;
   }
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
